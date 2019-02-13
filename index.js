@@ -33,5 +33,5 @@ function creatExport(name) {
 }
 
 
-const testName = 'foo'
-console.log(createImports() + createComponent(testName) + createPropTypes(testName) + creatExport(testName))
+const componentName = process.argv[2]
+console.log(createImports() + createComponent(componentName) + createPropTypes(componentName) + creatExport(componentName))
