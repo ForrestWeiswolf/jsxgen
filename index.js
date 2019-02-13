@@ -1,3 +1,5 @@
+var fs = require('fs')
+
 function createImports() {
   return (
     `import React from 'react'\n` +
@@ -34,4 +36,16 @@ function creatExport(name) {
 
 
 const componentName = process.argv[2]
-console.log(createImports() + createComponent(componentName) + createPropTypes(componentName) + creatExport(componentName))
+
+const fullComponentText = createImports() +
+  createComponent(componentName) +
+  createPropTypes(componentName) +
+  creatExport(componentName)
+
+fs.writeFile(`${componentName}.jsx`, fullComponentText, function (err) {
+  if (err) {
+    console.log(err)
+  } else {
+    console.log(`Created ${componentName}.jsx`)
+  }
+})
