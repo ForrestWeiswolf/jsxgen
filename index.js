@@ -5,12 +5,13 @@ const yargs = require('yargs')
 const createComponent = require('./createComponent')
 
 const argv = require('yargs').argv
-const componentName = argv['_'][0]
 
-fs.writeFile(`${componentName}.jsx`, createComponent(componentName), function (err) {
-  if (err) {
-    console.log(err)
-  } else {
-    console.log(`Created ${componentName}.jsx`)
-  }
+argv['_'].forEach(componentName => {
+  fs.writeFile(`${componentName}.jsx`, createComponent(componentName), function (err) {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(`Created ${componentName}.jsx`)
+    }
+  })
 })
