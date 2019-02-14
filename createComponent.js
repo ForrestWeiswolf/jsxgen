@@ -1,6 +1,6 @@
 function createImports() {
   return (
-    `import React from 'react'\n` +
+    `import React, { Component } from 'react'\n` +
     `import PropTypes from 'prop-types'\n\n`
   )
 }
