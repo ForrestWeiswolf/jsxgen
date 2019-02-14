@@ -1,4 +1,5 @@
-var fs = require('fs')
+const fs = require('fs')
+const yargs = require('yargs')
 
 function createImports() {
   return (
@@ -34,8 +35,8 @@ function creatExport(name) {
   return `export default ${name}\n\n`
 }
 
-const args = process.argv.slice(2);
-const componentName = args[0]
+const argv = require('yargs').argv
+const componentName = argv['_'][0]
 
 const fullComponentText = createImports() +
   createComponent(componentName) +
