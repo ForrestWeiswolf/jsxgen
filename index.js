@@ -34,8 +34,8 @@ function creatExport(name) {
   return `export default ${name}\n\n`
 }
 
-
-const componentName = process.argv[2]
+const args = process.argv.slice(2);
+const componentName = args[0]
 
 const fullComponentText = createImports() +
   createComponent(componentName) +
