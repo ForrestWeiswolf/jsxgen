@@ -1,5 +1,8 @@
 const fs = require('fs')
 const yargs = require('yargs')
+  .usage('Usage: jsxgen ComponentName')
+  .demandCommand(1)
+
 
 function createImports() {
   return (
