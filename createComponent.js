@@ -29,7 +29,7 @@ function createPropTypes(name) {
 }
 
 function creatExport(name) {
-  return `export default ${name}\n\n`
+  return `export default ${name}`
 }
 
 module.exports = function createComponent(name) {
