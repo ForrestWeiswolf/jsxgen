@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "chai": "^4.2.0",
     "yargs": "^13.1.0"
   },
   "devDependencies": {
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "chai": "^4.2.0"
   },
   "scripts": {
     "test": "mocha"
