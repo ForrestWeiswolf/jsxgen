@@ -5,13 +5,17 @@ const yargs = require('yargs')
   .boolean('stateful')
   .alias('stateful', 's')
   .describe('s', 'Make a stateful component')
+  .boolean('propTypes')
+  .alias('propTypes', 'p')
+  .default('p', true)
+  .describe('p', 'Import PropTypes')
 
 const createComponent = require('./createComponent')
 
 const argv = require('yargs').argv
 
 argv['_'].forEach(componentName => {
-  const componentText = createComponent(componentName, argv['stateful'])
+  const componentText = createComponent(componentName, argv['stateful'], argv['propTypes'])
 
   fs.writeFile(`${componentName}.jsx`, componentText, function (err) {
     if (err) {

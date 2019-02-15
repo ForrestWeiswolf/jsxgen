@@ -1,7 +1,7 @@
-function createComponent(name, isStateful) {
+function createComponent(name, isStateful, hasPropTypes) {
   const imports = (
     `import React${isStateful ? ', { Component }' : ''} from 'react'\n` +
-    `import PropTypes from 'prop-types'\n\n`
+    (hasPropTypes ? `import PropTypes from 'prop-types'\n\n` : '\n')
   )
 
   let component
@@ -37,7 +37,7 @@ function createComponent(name, isStateful) {
 
   const exportComponent = `export default ${name}`
 
-  return imports + component + propTypes + exportComponent
+  return imports + component + (hasPropTypes ? propTypes : '') + exportComponent
 }
 
 module.exports = createComponent
