@@ -1,12 +1,10 @@
-function createImports() {
-  return (
+function createComponent(name) {
+  const imports = (
     `import React, { Component } from 'react'\n` +
     `import PropTypes from 'prop-types'\n\n`
   )
-}
 
-function createComponentBody(name) {
-  return (
+  const component = (
     `class ${name} extends Component {\n` +
     `  constructor(props) {\n` +
     `    super(props)\n` +
@@ -19,22 +17,15 @@ function createComponentBody(name) {
     ` }\n` +
     `}\n\n`
   )
-}
 
-function createPropTypes(name) {
-  return (
+  const propTypes = (
     `${name}.propTypes = {\n` +
     `}\n\n`
   )
+
+  const exportComponent = `export default ${name}`
+
+  return imports + component + propTypes + exportComponent
 }
 
-function creatExport(name) {
-  return `export default ${name}`
-}
-
-module.exports = function createComponent(name) {
-  return createImports() +
-    createComponentBody(name) +
-    createPropTypes(name) +
-    creatExport(name)
-}
+module.exports = createComponent
