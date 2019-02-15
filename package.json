@@ -1,0 +1,26 @@
+{
+  "name": "mkjsx",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "yargs": "^13.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ForrestWeiswolf/mkjsx.git"
+  },
+  "author": "Forrest Wolf <forrest.weiswolf@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ForrestWeiswolf/mkjsx/issues"
+  },
+  "homepage": "https://github.com/ForrestWeiswolf/mkjsx#readme"
+}
