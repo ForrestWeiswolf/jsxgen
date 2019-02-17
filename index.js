@@ -1,6 +1,6 @@
 const fs = require('fs')
 const yargs = require('yargs')
-  .usage('Usage: $0 <ComponentName> [options]')
+  .usage('Usage: $0 <ComponentNames> [options]')
   .demandCommand(1)
   .boolean('stateful')
   .alias('stateful', 's')
