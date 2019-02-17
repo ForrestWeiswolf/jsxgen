@@ -15,7 +15,10 @@ const createComponent = require('./createComponent')
 const argv = require('yargs').argv
 
 argv['_'].forEach(componentName => {
-  const componentText = createComponent(componentName, argv['stateful'], argv['propTypes'])
+  const componentText = createComponent(
+    componentName,
+    argv
+  )
 
   fs.writeFile(`${componentName}.jsx`, componentText, function (err) {
     if (err) {
