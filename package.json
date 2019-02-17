@@ -1,7 +1,7 @@
 {
   "name": "mkjsx",
   "version": "1.0.0",
-  "description": "",
+  "description": "React component generator",
   "main": "index.js",
   "dependencies": {
     "yargs": "^13.1.0"
