@@ -6,17 +6,27 @@ function createComponent(name, options) {
 
   let component
   if (options.stateful) {
+    let binds = ''
+    let methods = ''
+
+    options.methods.forEach(methodName => {
+      binds += `    this.${methodName} = this.${methodName}.bind(this)\n`
+      methods += `  ${methodName}() {}\n\n`
+    })
+
     component = (
       `class ${name} extends Component {\n` +
       `  constructor(props) {\n` +
       `    super(props)\n` +
       `    this.state = {}\n` +
-      ` }\n\n` +
-      ` render(){\n` +
-      `   return (\n` +
-      `     <div></div>\n` +
-      `   )\n` +
-      ` }\n` +
+      binds +
+      `  }\n\n` +
+      methods +
+      `  render(){\n` +
+      `    return (\n` +
+      `      <div></div>\n` +
+      `    )\n` +
+      `  }\n` +
       `}\n\n`
     )
   } else {

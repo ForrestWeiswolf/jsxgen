@@ -9,6 +9,9 @@ const yargs = require('yargs')
   .alias('propTypes', 'p')
   .default('p', true)
   .describe('p', 'Import PropTypes')
+  .array('methods')
+  .alias('methods', 'm')
+  .describe('m', 'Define and bind methods for a stateful (-s) component')
 
 const createComponent = require('./createComponent')
 
