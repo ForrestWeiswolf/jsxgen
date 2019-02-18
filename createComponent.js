@@ -1,6 +1,7 @@
 function createComponent(name, options) {
   const imports = (
     `import React${options.stateful ? ', { Component }' : ''} from 'react'\n` +
+    (options.redux ? `import {connect} from 'react-redux'\n` : '') +
     (options.propTypes ? `import PropTypes from 'prop-types'\n\n` : '\n')
   )
 
@@ -45,9 +46,26 @@ function createComponent(name, options) {
     `}\n\n`
   )
 
-  const exportComponent = `export default ${name}`
+  const mapFunctions = (
+    `const mapState = (state) => {\n` +
+    `  return {}\n` +
+    `}\n\n` +
+    `const mapDispatch = (dispatch) => {\n` +
+    `  return {}\n` +
+    `}\n\n`
+  )
 
-  return imports + component + (options.propTypes ? propTypes : '') + exportComponent
+  const exportComponent = options.redux ?
+    `export default connect(mapState, mapDispatch)(${name})` :
+    `export default ${name}`
+
+  return (
+    imports +
+    component +
+    (options.propTypes ? propTypes : '') +
+    (options.redux ? mapFunctions : '') +
+    exportComponent
+  )
 }
 
 module.exports = createComponent

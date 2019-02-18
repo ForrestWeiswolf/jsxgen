@@ -12,6 +12,10 @@ const yargs = require('yargs')
   .array('methods')
   .alias('methods', 'm')
   .describe('m', 'Define and bind methods for a stateful (-s) component')
+  .array('redux')
+  .alias('redux', 'react-redux')
+  .alias('redux', 'r')
+  .describe('r', 'Import react-redux and create mapState and mapDispatch functions')
 
 const createComponent = require('./createComponent')
 
