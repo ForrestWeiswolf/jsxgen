@@ -22,7 +22,7 @@ const createComponent = require('./createComponent')
 const argv = yargs.argv
 
 function createFile(path, text) {
-  fs.writeFile(`${namepath}.jsx`, text, function (err) {
+  fs.writeFile(`${path}.jsx`, text, {flag: 'wx'}, function (err) {
     if (err) {
       console.log(err)
     } else {
@@ -40,13 +40,5 @@ argv['_'].forEach(namepath => {
     argv
   )
 
-  fs.access(`${namepath}.jsx`, fs.constants.F_OK, (err) => {
-    if (err) {
-      // if file doesn't exist
-      createFile(namepath, componentText)
-    } else {
-      // if file does exist
-      console.log(`${namepath}.jsx already exists.`)
-    }
-  })
+  createFile(namepath, componentText)
 })
