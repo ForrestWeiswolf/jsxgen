@@ -21,6 +21,16 @@ const createComponent = require('./createComponent')
 
 const argv = yargs.argv
 
+function createFile(path, text) {
+  fs.writeFile(`${namepath}.jsx`, text, function (err) {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(`Created ${path}.jsx`)
+    }
+  })
+}
+
 argv['_'].forEach(namepath => {
   const namepathArr = namepath.split('/')
   const componentName = namepathArr[namepathArr.length - 1]
@@ -30,11 +40,13 @@ argv['_'].forEach(namepath => {
     argv
   )
 
-  fs.writeFile(`${namepath}.jsx`, componentText, function (err) {
+  fs.access(`${namepath}.jsx`, fs.constants.F_OK, (err) => {
     if (err) {
-      console.log(err)
+      // if file doesn't exist
+      createFile(namepath, componentText)
     } else {
-      console.log(`Created ${componentName}.jsx`)
+      // if file does exist
+      console.log(`${namepath}.jsx already exists.`)
     }
   })
 })
