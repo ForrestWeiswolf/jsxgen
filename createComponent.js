@@ -10,10 +10,12 @@ function createComponent(name, options) {
     let binds = ''
     let methods = ''
 
-    options.methods.forEach(methodName => {
-      binds += `    this.${methodName} = this.${methodName}.bind(this)\n`
-      methods += `  ${methodName}() {}\n\n`
-    })
+    if (options.methods) {
+      options.methods.forEach(methodName => {
+        binds += `    this.${methodName} = this.${methodName}.bind(this)\n`
+        methods += `  ${methodName}() {}\n\n`
+      })
+    }
 
     component = (
       `class ${name} extends Component {\n` +
