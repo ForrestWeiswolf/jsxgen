@@ -22,8 +22,12 @@ const createComponent = require('./createComponent')
 const argv = yargs.argv
 
 function createFile(path, text) {
-  fs.writeFile(`${path}.jsx`, text, {flag: 'wx'}, function (err) {
-    if (err) {
+   fs.writeFile(`${path}.jsx`, text, {
+    flag: 'wx'
+  }, function (err) {
+    if (err && err.code === 'EEXIST') {
+      console.log(`${path}.jsx already exists!`)
+    } else if (err) {
       console.log(err)
     } else {
       console.log(`Created ${path}.jsx`)
