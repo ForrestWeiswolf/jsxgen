@@ -21,21 +21,72 @@ const createComponent = require('./createComponent')
 
 const argv = yargs.argv
 
-function createFile(path, text) {
-   fs.writeFile(`${path}.jsx`, text, {
-    flag: 'wx'
-  }, function (err) {
+const rl = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout
+})
+
+function confirmYN(message, yesCallback, noCallback) {
+  rl.question(message, (answer) => {
+    if (answer[0] && answer[0].toLowerCase() === 'y') {
+      console.log('close')
+      rl.close()
+      yesCallback()
+    } else {
+      console.log('close')
+      rl.close()
+      noCallback()
+    }
+  });
+}
+
+function createFile(path, text, next, flag = 'wx') {
+  console.log(path)
+  try {
+    fs.writeFileSync(`${path}.jsx`, text, {
+      flag: 'wx'
+    })
+  } catch (err) {
     if (err && err.code === 'EEXIST') {
-      console.log(`${path}.jsx already exists!`)
+      confirmYN(
+        `${path}.jsx already exists! Overwrite?\n`,
+        () => {
+          // createFile(path, text, next, 'w')
+          next()
+        },
+        () => {
+          console.log("Skipping...")
+          next()
+        }
+      )
     } else if (err) {
       console.log(err)
     } else {
       console.log(`Created ${path}.jsx`)
+      next()
     }
-  })
+  }
 }
 
-argv['_'].forEach(namepath => {
+console.log(argv['_'])
+// argv['_'].forEach(namepath => {
+//   const namepathArr = namepath.split('/')
+//   const componentName = namepathArr[namepathArr.length - 1]
+
+//   const componentText = createComponent(
+//     componentName,
+//     argv
+//   )
+
+//   console.log(namepath)
+//   createFile(namepath, componentText)
+// })
+
+function recurseThrough(arr, callback, index = 0) {
+  callback(arr[index], () => recurseThrough(arr, callback, index + 1))
+}
+
+recurseThrough(argv['_'], (namepath, next) => {
   const namepathArr = namepath.split('/')
   const componentName = namepathArr[namepathArr.length - 1]
 
@@ -44,5 +95,6 @@ argv['_'].forEach(namepath => {
     argv
   )
 
-  createFile(namepath, componentText)
+  console.log(namepath)
+  createFile(namepath, componentText, next)
 })
