@@ -21,23 +21,31 @@ const createComponent = require('./createComponent')
 
 const argv = yargs.argv
 
-const rl = require('readline').createInterface({
-  input: process.stdin,
-  output: process.stdout
-})
+// const rl = require('readline').createInterface({
+//   input: process.stdin,
+//   output: process.stdout
+// })
+
+var standardInput = process.stdin
+
+// Set input character encoding.
+standardInput.setEncoding('utf-8')
+
 
 function confirmYN(message, yesCallback, noCallback) {
-  rl.question(message, (answer) => {
+  console.log({message})
+  standardInput.on('data', (answer) => {
+    // console.log(answer)
     if (answer[0] && answer[0].toLowerCase() === 'y') {
-      console.log('close')
-      rl.close()
+      // console.log('close')
+      // rl.close()
       yesCallback()
     } else {
-      console.log('close')
-      rl.close()
+      // console.log('close')
+      // rl.close()
       noCallback()
     }
-  });
+  })
 }
 
 function createFile(path, text, next, flag = 'wx') {
@@ -51,7 +59,7 @@ function createFile(path, text, next, flag = 'wx') {
       confirmYN(
         `${path}.jsx already exists! Overwrite?\n`,
         () => {
-          // createFile(path, text, next, 'w')
+          createFile(path, text, next, 'w')
           next()
         },
         () => {
@@ -69,21 +77,26 @@ function createFile(path, text, next, flag = 'wx') {
 }
 
 console.log(argv['_'])
-// argv['_'].forEach(namepath => {
-//   const namepathArr = namepath.split('/')
-//   const componentName = namepathArr[namepathArr.length - 1]
+argv['_'].forEach(namepath => {
+  const namepathArr = namepath.split('/')
+  const componentName = namepathArr[namepathArr.length - 1]
 
-//   const componentText = createComponent(
-//     componentName,
-//     argv
-//   )
+  const componentText = createComponent(
+    componentName,
+    argv
+  )
 
-//   console.log(namepath)
-//   createFile(namepath, componentText)
-// })
+  console.log(namepath)
+  createFile(namepath, componentText)
+})
 
-function recurseThrough(arr, callback, index = 0) {
-  callback(arr[index], () => recurseThrough(arr, callback, index + 1))
+function recurseThrough(arr, callback, end, index = 0) {
+  if (index < arr.length) {
+    console.log(index)
+    callback(arr[index], () => recurseThrough(arr, callback, end, index + 1))
+  } else {
+    end()
+  }
 }
 
 recurseThrough(argv['_'], (namepath, next) => {
@@ -97,4 +110,5 @@ recurseThrough(argv['_'], (namepath, next) => {
 
   console.log(namepath)
   createFile(namepath, componentText, next)
-})
+}, process.exit)
+
