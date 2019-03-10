@@ -4,6 +4,7 @@
   "description": "A React component generator",
   "main": "index.js",
   "dependencies": {
+    "readline-sync": "^1.4.9",
     "yargs": "^13.1.0"
   },
   "devDependencies": {
