@@ -28,13 +28,12 @@ const rl = require('readline').createInterface({
 
 function confirmYN(message, yesCallback, noCallback) {
   rl.question(message, (answer) => {
+    rl.close()
+    console.log('close')
+
     if (answer[0] && answer[0].toLowerCase() === 'y') {
-      console.log('close')
-      rl.close()
       yesCallback()
     } else {
-      console.log('close')
-      rl.close()
       noCallback()
     }
   });
@@ -82,8 +81,14 @@ console.log(argv['_'])
 //   createFile(namepath, componentText)
 // })
 
-function recurseThrough(arr, callback, index = 0) {
-  callback(arr[index], () => recurseThrough(arr, callback, index + 1))
+function recurseThrough(arr, callback, end, index) {
+  index = index || 0
+  console.log(index, index < arr.length)
+  if (index < arr.length) {
+    callback(arr[index], () => recurseThrough(arr, callback, end, 1 + index))
+  } else {
+    end()
+  }
 }
 
 recurseThrough(argv['_'], (namepath, next) => {
@@ -95,6 +100,5 @@ recurseThrough(argv['_'], (namepath, next) => {
     argv
   )
 
-  console.log(namepath)
   createFile(namepath, componentText, next)
-})
+}, process.exit)
