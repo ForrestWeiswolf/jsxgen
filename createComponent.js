@@ -1,3 +1,5 @@
+const standardArguments = require('./standardArguments')
+
 function createComponent(name, options) {
   const imports = (
     `import React${options.stateful ? ', { Component }' : ''} from 'react'\n` +
@@ -13,7 +15,7 @@ function createComponent(name, options) {
     if (options.methods) {
       options.methods.forEach(methodName => {
         binds += `    this.${methodName} = this.${methodName}.bind(this)\n`
-        methods += `  ${methodName}() {}\n\n`
+        methods += `  ${methodName}(${standardArguments[methodName] || ''}) {}\n\n`
       })
     }
 
