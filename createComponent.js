@@ -14,7 +14,9 @@ function createComponent(name, options) {
 
     if (options.methods) {
       options.methods.forEach(methodName => {
-        binds += `    this.${methodName} = this.${methodName}.bind(this)\n`
+        if(standardArguments[methodName] === undefined){
+          binds += `    this.${methodName} = this.${methodName}.bind(this)\n`
+        }
         methods += `  ${methodName}(${standardArguments[methodName] || ''}) {}\n\n`
       })
     }

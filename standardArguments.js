@@ -8,5 +8,9 @@ module.exports = {
   UNSAFE_componentWillReceiveProps: 'nextProps',
   componentWillReceiveProps: 'nextProps',
   UNSAFE_componentWillUpdate: 'nextProps, nextState',
-  componentWillUpdate: 'nextProps, nextState'
+  componentWillUpdate: 'nextProps, nextState',
+  componentDidMount: '',
+  componentWillUnmount: '',
+  UNSAFE_componentWillMount: '',
+  componentWillMount: ''
 }
