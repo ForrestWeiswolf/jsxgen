@@ -28,22 +28,23 @@ function createFile(path, text, next, flag = 'wx') {
     fs.writeFileSync(`${path}.jsx`, text, {
       flag: 'wx'
     })
+
+    console.log(`Created ${path}.jsx`)
+    next()
   } catch (err) {
     if (err && err.code === 'EEXIST') {
       if (readlineSync.keyInYN(`${path}.jsx already exists! Overwrite?\n`)) {
         fs.writeFileSync(`${path}.jsx`, text, {
           flag: 'w'
         })
+        console.log(`Overwrote ${path}.jsx`)
         next()
       } else {
         console.log("Skipping...")
         next()
       }
-    } else if (err) {
-      console.log(err)
     } else {
-      console.log(`Created ${path}.jsx`)
-      next()
+      console.log(err)
     }
   }
 }
