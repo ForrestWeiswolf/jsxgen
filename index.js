@@ -24,14 +24,9 @@ const argv = yargs.argv
 const readlineSync = require('readline-sync');
 
 function createFile(path, text, next, flag = 'wx') {
-  try {
-    fs.writeFileSync(`${path}.jsx`, text, {
-      flag: 'wx'
-    })
-
-    console.log(`Created ${path}.jsx`)
-    next()
-  } catch (err) {
+  fs.writeFile(`${path}.jsx`, text, {
+    flag: 'wx'
+  }, (err) => {
     if (err && err.code === 'EEXIST') {
       if (readlineSync.keyInYN(`${path}.jsx already exists! Overwrite?\n`)) {
         fs.writeFileSync(`${path}.jsx`, text, {
@@ -43,10 +38,13 @@ function createFile(path, text, next, flag = 'wx') {
         console.log("Skipping...")
         next()
       }
-    } else {
+    } else if (err) {
       console.log(err)
+    } else {
+      console.log(`Created ${path}.jsx`)
+      next()
     }
-  }
+  })
 }
 
 function recurseThrough(arr, callback, end, index) {
