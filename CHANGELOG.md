@@ -17,3 +17,7 @@
 - Update the README
 
 - Add `"man"` field to package.json
+
+# 1.1.2 / 2019-03-12
+
+- Bugfix: remove mis-formatted man page
