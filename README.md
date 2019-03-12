@@ -5,6 +5,7 @@ Usage:
 `mkjsx <ComponentNames> [options]`
 
 Options:
+
 | name        | description           | type  |
 | ------------- |:-------------:| -----:|
 | `--help` | Show help | [boolean] |
