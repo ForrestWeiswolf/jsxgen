@@ -50,12 +50,12 @@ Foo.propTypes = {
 export default Foo
 ```
 
-Installation:
+# Installation:
 `npm i -g mkjsx`
 
 (Alternatively, you can run it with npx if your version of node supports that.)
 
-Usage:
+# Usage:
 `mkjsx <ComponentNames> [options]`
 
 Options:
