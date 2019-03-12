@@ -1,6 +1,6 @@
 {
   "name": "mkjsx",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A React component generator",
   "main": "index.js",
   "man" : "./README.md",

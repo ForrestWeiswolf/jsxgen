@@ -11,3 +11,9 @@
 - Bugfix: doesn't bind lifecycle methods
 
 - Uses fs.writeFile instead of fs.writeFileSync
+
+# 1.1.2 / 2019-03-12
+
+- Update the README
+
+- Add `"man"` field to package.json
