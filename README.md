@@ -1,7 +1,7 @@
 # mkjsx
 
 React components can have quite a bit of boilerplate, and exactly what it is depends on what component you're making - stateful, functional, redux-connected...
-mkjsx is a React component generator - a command line tool to create all that boilerplate for you. Designed to have flexile options but sensible defaults, it can be as simple to use as `mkjsx Foo`:
+**mkjsx** is a React component generator - a command line tool to create all that boilerplate for you. Designed to have flexile options but sensible defaults, it can be as simple to use as `mkjsx Foo`:
 
 ```javascript
 import React from 'react'
@@ -20,34 +20,43 @@ Foo.propTypes = {
 export default Foo
 ```
 
-But can handle situations as particular as `mkjsx Bar -s --methods componentDidUpdate handleClick`:
+But can handle situations as particular as `Bar -rs --methods componentDidUpdate handleClick`:
 
 ```javascript
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-class Foo extends Component {
+class Bar extends Component {
   constructor(props) {
     super(props)
     this.state = {}
     this.handleClick = this.handleClick.bind(this)
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {}
+  componentDidUpdate(prevProps, prevState, snapshot) { }
 
-  handleClick() {}
+  handleClick() { }
 
-  render(){
+  render() {
     return (
       <div></div>
     )
   }
 }
 
-Foo.propTypes = {
+Bar.propTypes = {
 }
 
-export default Foo
+const mapState = (state) => {
+  return {}
+}
+
+const mapDispatch = (dispatch) => {
+  return {}
+}
+
+export default connect(mapState, mapDispatch)(Bar)
 ```
 
 # Installation:
