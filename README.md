@@ -64,6 +64,6 @@ Options:
 | ------------- |:-------------:| -----:|
 | `--help` | Show help | [boolean] |
 | `--version` | Show version number | [boolean] |
-| `--stateful`, `-s` | Make stateful components | [boolean] |
+| `--stateful`, `-s` | Make stateful class components (If neither `--stateful` nor `--methods` are used, mkjsx will create functional components) | [boolean] |
 | `--propTypes`, `-p` | Import PropTypes | [boolean] [default: true] |
-| `--methods`, `-m` | Define and bind methods for stateful (-s) components | [array]
+| `--methods`, `-m` | Define and bind methods for class components (If neither `--stateful` nor `--methods` are used, mkjsx will create functional components) | [array]
