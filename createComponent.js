@@ -1,33 +1,40 @@
 const standardArguments = require('./standardArguments')
 
 function createComponent(name, options) {
+  const isClass = options.stateful || (options.methods && options.methods.length > 0)
+
   const imports = (
-    `import React${options.stateful ? ', { Component }' : ''} from 'react'\n` +
+    `import React${isClass ? ', { Component }' : ''} from 'react'\n` +
     (options.redux ? `import {connect} from 'react-redux'\n` : '') +
     (options.propTypes ? `import PropTypes from 'prop-types'\n\n` : '\n')
   )
 
   let component
-  if (options.stateful) {
+  if (isClass) {
     let binds = ''
     let methods = ''
 
     if (options.methods) {
       options.methods.forEach(methodName => {
-        if(standardArguments[methodName] === undefined){
+        if (standardArguments[methodName] === undefined) {
           binds += `    this.${methodName} = this.${methodName}.bind(this)\n`
         }
         methods += `  ${methodName}(${standardArguments[methodName] || ''}) {}\n\n`
       })
     }
 
-    component = (
-      `class ${name} extends Component {\n` +
+    const constructor =
       `  constructor(props) {\n` +
       `    super(props)\n` +
-      `    this.state = {}\n` +
+      // initialize state if stateful
+      (options.stateful ? `    this.state = {}\n` : '') +
       binds +
-      `  }\n\n` +
+      `  }\n\n`
+
+    component = (
+      `class ${name} extends Component {\n` +
+      // if it's stateful or we need to bind methods, make a constructor
+      (options.stateful || binds !== '' ? constructor : '') +
       methods +
       `  render(){\n` +
       `    return (\n` +
