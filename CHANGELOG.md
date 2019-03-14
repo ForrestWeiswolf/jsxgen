@@ -21,3 +21,11 @@
 # 1.1.2 / 2019-03-12
 
 - Bugfix: remove mis-formatted man page
+
+# 1.2.0 / 2019-03-14
+
+- `-r` option is documented in README
+
+- Spacing in react-redux import fixed to be style-guide compliant
+
+- Class components are given a constructor only they are stateful or have bound methods
