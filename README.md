@@ -20,7 +20,7 @@ Foo.propTypes = {
 export default Foo
 ```
 
-But can handle situations as particular as `Bar -rs --methods componentDidUpdate handleClick`:
+But can handle situations as particular as `mkjsx Bar -rs --methods componentDidUpdate handleClick`:
 
 ```javascript
 import React, { Component } from 'react'
