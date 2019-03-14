@@ -73,7 +73,7 @@ Options:
 | ------------- |:-------------:| -----:|
 | `--help` | Show help | [boolean] |
 | `--version` | Show version number | [boolean] |
-| `--stateful`, `-s` | Make stateful class components (If neither `--stateful` nor `--methods` are used, mkjsx will create functional components) | [boolean] |
+| `--stateful`, `-s` | Make stateful class components (If neither `--stateful` nor `--methods` are used, mkjsx will create functional components) | [boolean] [default: false] |
 | `--propTypes`, `-p` | Import PropTypes | [boolean] [default: true] |
 | `--methods`, `-m` | Define and bind methods for class components (If neither `--stateful` nor `--methods` are used, mkjsx will create functional components) | [array]
-| `--redux` `--react-redux`, `-r` | Import react-redux and create mapState and mapDispatch functions | [boolean]
+| `--redux` `--react-redux`, `-r` | Import react-redux and create mapState and mapDispatch functions | [boolean] [default: false]
