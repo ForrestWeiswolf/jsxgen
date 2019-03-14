@@ -5,7 +5,7 @@ function createComponent(name, options) {
 
   const imports = (
     `import React${isClass ? ', { Component }' : ''} from 'react'\n` +
-    (options.redux ? `import {connect} from 'react-redux'\n` : '') +
+    (options.redux ? `import { connect } from 'react-redux'\n` : '') +
     (options.propTypes ? `import PropTypes from 'prop-types'\n\n` : '\n')
   )
 
