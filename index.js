@@ -1,27 +1,28 @@
 #!/usr/bin/env node
 
 const fs = require('fs')
+const readlineSync = require('readline-sync')
+const createComponent = require('./createComponent')
 const yargs = require('yargs')
   .usage('Usage: $0 <ComponentNames> [options]')
   .demandCommand(1)
   .boolean('stateful')
   .alias('stateful', 's')
-  .describe('s', 'Make a stateful component')
+  .describe('s', 'Make stateful class components (If neither `--stateful` nor `--methods` are used, mkjsx will create functional components)')
   .boolean('propTypes')
   .alias('propTypes', 'p')
   .default('p', true)
   .describe('p', 'Import PropTypes')
+  // props?
   .array('methods')
   .alias('methods', 'm')
-  .describe('m', 'Define and bind methods for a stateful (-s) component')
+  .describe('m', 'Define and bind methods for class components (If neither `--stateful` nor `--methods` are used, mkjsx will create functional components)')
   .array('redux')
   .alias('redux', 'react-redux')
   .alias('redux', 'r')
   .describe('r', 'Import react-redux and create mapState and mapDispatch functions')
 
-const createComponent = require('./createComponent')
 const argv = yargs.argv
-const readlineSync = require('readline-sync');
 
 function createFile(path, text, next, flag = 'wx') {
   fs.writeFile(`${path}.jsx`, text, {
@@ -56,7 +57,9 @@ function recurseThrough(arr, callback, end, index) {
   }
 }
 
-recurseThrough(argv['_'], (namepath, next) => {
+const namepaths = argv['_']
+
+recurseThrough(namepaths, (namepath, next) => {
   const namepathArr = namepath.split('/')
   const componentName = namepathArr[namepathArr.length - 1]
 
