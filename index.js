@@ -33,12 +33,11 @@ The callback function called next will be used to advance to the next file
 and for user confirmation before moving on.)
 */
 function createFile(path, text, next, flag = 'wx') {
-  writeFile(`${path}.jsx`, text, {
+  return writeFile(`${path}.jsx`, text, {
       flag: 'wx'
     })
     .then(() => {
       console.log(`Created ${path}.jsx`)
-      next()
     })
     .catch((err) => {
       // if that error is thrown (the file already exists)...
@@ -50,11 +49,9 @@ function createFile(path, text, next, flag = 'wx') {
             flag: 'w'
           }).then(() => {
             console.log(`Overwrote ${path}.jsx`)
-            next()
           })
         } else {
           console.log("Skipping...")
-          next()
         }
       } else {
         // other errors just get logged
@@ -84,4 +81,5 @@ recurseThrough(namepaths, (namepath, next) => {
   )
 
   createFile(namepath, componentText, next)
+    .then(next)
 }, process.exit)
