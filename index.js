@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 
 const fs = require('fs')
+const util = require('util')
+const writeFile = util.promisify(fs.writeFile)
+
 const readlineSync = require('readline-sync')
 const createComponent = require('./createComponent')
 const yargs = require('yargs')
@@ -30,31 +33,34 @@ The callback function called next will be used to advance to the next file
 and for user confirmation before moving on.)
 */
 function createFile(path, text, next, flag = 'wx') {
-  fs.writeFile(`${path}.jsx`, text, {
-    flag: 'wx'
-  }, (err) => {
-    // but if that error is thrown (the file already exists)
-    if (err && err.code === 'EEXIST') {
-      // ask if the user wants to overwrite it (using readlineSync)
-      if (readlineSync.keyInYN(`${path}.jsx already exists! Overwrite?\n`)) {
-        // if yes, we try this again, but with 'w' flag - overwrites existing files
-        fs.writeFileSync(`${path}.jsx`, text, {
-          flag: 'w'
-        })
-        console.log(`Overwrote ${path}.jsx`)
-        next()
-      } else {
-        console.log("Skipping...")
-        next()
-      }
-    } else if (err) {
-      // other errors just get logged
-      console.error(err)
-    } else {
+  writeFile(`${path}.jsx`, text, {
+      flag: 'wx'
+    })
+    .then(() => {
       console.log(`Created ${path}.jsx`)
       next()
-    }
-  })
+    })
+    .catch((err) => {
+      // if that error is thrown (the file already exists)...
+      if (err.code === 'EEXIST') {
+        // ask if the user wants to overwrite it (using readlineSync)
+        if (readlineSync.keyInYN(`${path}.jsx already exists! Overwrite?\n`)) {
+          // if yes, we try this again, but with 'w' flag - overwrites existing files
+          return writeFile(`${path}.jsx`, text, {
+            flag: 'w'
+          }).then(() => {
+            console.log(`Overwrote ${path}.jsx`)
+            next()
+          })
+        } else {
+          console.log("Skipping...")
+          next()
+        }
+      } else {
+        // other errors just get logged
+        console.error(err)
+      }
+    })
 }
 
 function recurseThrough(arr, callback, end, index) {
