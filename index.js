@@ -24,12 +24,20 @@ const yargs = require('yargs')
 
 const argv = yargs.argv
 
+/* Flag defaults to 'wx' - throws an error if the file already exists.
+The callback function called next will be used to advance to the next file
+(neccessary because we might need to wait for both async file creation
+and for user confirmation before moving on.)
+*/
 function createFile(path, text, next, flag = 'wx') {
   fs.writeFile(`${path}.jsx`, text, {
     flag: 'wx'
   }, (err) => {
+    // but if that error is thrown (the file already exists)
     if (err && err.code === 'EEXIST') {
+      // ask if the user wants to overwrite it (using readlineSync)
       if (readlineSync.keyInYN(`${path}.jsx already exists! Overwrite?\n`)) {
+        // if yes, we try this again, but with 'w' flag - overwrites existing files
         fs.writeFileSync(`${path}.jsx`, text, {
           flag: 'w'
         })
@@ -40,7 +48,8 @@ function createFile(path, text, next, flag = 'wx') {
         next()
       }
     } else if (err) {
-      console.log(err)
+      // other errors just get logged
+      console.error(err)
     } else {
       console.log(`Created ${path}.jsx`)
       next()
