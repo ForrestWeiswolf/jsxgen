@@ -24,6 +24,10 @@ const yargs = require('yargs')
   .alias('redux', 'react-redux')
   .alias('redux', 'r')
   .describe('r', 'Import react-redux and create mapState and mapDispatch functions')
+  .boolean('jsx')
+  .alias('jsx', 'x')
+  .default('x', true)
+  .describe('x', 'Make a .jsx (rather than .js) file. ')
 
 const argv = yargs.argv
 
@@ -32,23 +36,23 @@ The callback function called next will be used to advance to the next file
 (neccessary because we might need to wait for both async file creation
 and for user confirmation before moving on.)
 */
-function createFile(path, text, next, flag = 'wx') {
-  return writeFile(`${path}.jsx`, text, {
+function createFile(filename, text, next, flag = 'wx') {
+  return writeFile(filename, text, {
       flag: 'wx'
     })
     .then(() => {
-      console.log(`Created ${path}.jsx`)
+      console.log(`Created ${filename}`)
     })
     .catch((err) => {
       // if that error is thrown (the file already exists)...
       if (err.code === 'EEXIST') {
         // ask if the user wants to overwrite it (using readlineSync)
-        if (readlineSync.keyInYN(`${path}.jsx already exists! Overwrite?\n`)) {
+        if (readlineSync.keyInYN(`${filename} already exists! Overwrite?\n`)) {
           // if yes, we try this again, but with 'w' flag - overwrites existing files
-          return writeFile(`${path}.jsx`, text, {
+          return writeFile(`${filename}`, text, {
             flag: 'w'
           }).then(() => {
-            console.log(`Overwrote ${path}.jsx`)
+            console.log(`Overwrote ${filename}`)
           })
         } else {
           console.log("Skipping...")
@@ -75,11 +79,13 @@ recurseThrough(namepaths, (namepath, next) => {
   const namepathArr = namepath.split('/')
   const componentName = namepathArr[namepathArr.length - 1]
 
+  const filename = `${namepath}.${argv['jsx'] ? 'jsx' : 'js'}`
+
   const componentText = createComponent(
     componentName,
     argv
   )
 
-  createFile(namepath, componentText, next)
+  createFile(filename, componentText, next)
     .then(next)
 }, process.exit)
