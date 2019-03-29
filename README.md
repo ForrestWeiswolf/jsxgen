@@ -77,3 +77,4 @@ Options:
 | `--propTypes`, `-p` | Import PropTypes | [boolean] [default: true] |
 | `--methods`, `-m` | Define and bind methods for class components (If neither `--stateful` nor `--methods` are used, mkjsx will create functional components) | [array]
 | `--redux` `--react-redux`, `-r` | Import react-redux and create mapState and mapDispatch functions | [boolean] [default: false]
+| `--jsx` `-x` | Make a .jsx (rather than .js) file. | [boolean] [default: true]

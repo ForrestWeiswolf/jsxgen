@@ -27,7 +27,7 @@ const yargs = require('yargs')
   .boolean('jsx')
   .alias('jsx', 'x')
   .default('x', true)
-  .describe('x', 'Make a .jsx (rather than .js) file. ')
+  .describe('x', 'Make a .jsx (rather than .js) file')
 
 const argv = yargs.argv
 
