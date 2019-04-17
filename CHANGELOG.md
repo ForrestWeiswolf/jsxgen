@@ -35,3 +35,7 @@
 - Refactor code in index.js to be more readable
 
 - Update `--help` info on command line options
+
+# 1.4.0 / 2019-03-29
+
+- `-x` option can be used to make `.js` rather that `.jsx` files
