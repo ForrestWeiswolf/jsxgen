@@ -39,3 +39,7 @@
 # 1.4.0 / 2019-03-29
 
 - `-x` option can be used to make `.js` rather that `.jsx` files
+
+# 1.4.1 / 2019-04-17
+
+- Refactored code for creating files
